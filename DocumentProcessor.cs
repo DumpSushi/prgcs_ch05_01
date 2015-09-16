@@ -6,13 +6,25 @@ using System.Threading.Tasks;
 
 namespace ch05_01
 {
-	static class DocumentProcessor
+	class DocumentProcessor
 	{
-		public static void Process(Document doc)
+		private readonly List<DocumentProcess> processes =
+			new List<DocumentProcess>();
+
+		public List<DocumentProcess> Processes
 		{
-			DocumentProcesses.TranslateIntoFrench(doc);
-			DocumentProcesses.Spellcheck(doc);
-			DocumentProcesses.Repaginate(doc);
+			get
+			{
+				return processes;
+			}
+		}
+
+		public void Process(Document doc)
+		{
+			foreach (DocumentProcess process in Processes)
+			{
+				process.Process(doc);
+			}
 		}
 	}
 }

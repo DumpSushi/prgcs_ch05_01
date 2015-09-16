@@ -23,12 +23,24 @@ namespace ch05_01
 				Text = "This is the new millenium, I promise you."
 			};
 
+			DocumentProcessor processor = Configure();
+
 			Console.WriteLine("文書1を処理しています。");
-			DocumentProcessor.Process(doc1);
+			processor.Process(doc1);
 			Console.WriteLine();
 			Console.WriteLine("文書2を処理しています。");
-			DocumentProcessor.Process(doc2);
+			processor.Process(doc2);
+
 			Console.ReadKey();
+		}
+
+		static DocumentProcessor Configure()
+		{
+			DocumentProcessor rc = new DocumentProcessor();
+			rc.Processes.Add(new TranslateInfoFrenchProcess());
+			rc.Processes.Add(new SpellcheckProcess());
+			rc.Processes.Add(new RepaginateProcess());
+			return rc;
 		}
 	}
 }

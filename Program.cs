@@ -20,7 +20,7 @@ namespace ch05_01
 			{
 				Author = "Ian Griffiths",
 				DocumentDate = new DateTime(2001, 01, 01),
-				Text = "This is the new millenium, I promise you."
+				Text = "This is the new millennium, I promise you."
 			};
 
 			DocumentProcessor processor = Configure();
@@ -37,9 +37,16 @@ namespace ch05_01
 		static DocumentProcessor Configure()
 		{
 			DocumentProcessor rc = new DocumentProcessor();
-			rc.Processes.Add(new TranslateInfoFrenchProcess());
-			rc.Processes.Add(new SpellcheckProcess());
-			rc.Processes.Add(new RepaginateProcess());
+			rc.Processes.Add(DocumentProcesses.TranslateIntoFrench);
+			rc.Processes.Add(DocumentProcesses.Spellcheck);
+			rc.Processes.Add(DocumentProcesses.Repaginate);
+
+			TrademarkFilter trademarkFilter = new TrademarkFilter();
+			trademarkFilter.Trademarks.Add("O'Reilly");
+			trademarkFilter.Trademarks.Add("millennium");
+
+			rc.Processes.Add(trademarkFilter.HighlightTradeMarks);
+
 			return rc;
 		}
 	}

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ch05_01
 {
+	delegate void DocumentProcess(Document doc);
+	/*
 	abstract class DocumentProcess
 	{
 		public abstract void Process(Document doc);
@@ -34,4 +36,5 @@ namespace ch05_01
 			DocumentProcesses.TranslateIntoFrench(doc);
 		}
 	}
+	 */
 }

@@ -23,7 +23,7 @@ namespace ch05_01
 		{
 			foreach (DocumentProcess process in Processes)
 			{
-				process.Process(doc);
+				process(doc);
 			}
 		}
 	}

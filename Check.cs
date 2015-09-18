@@ -6,6 +6,5 @@ using System.Threading.Tasks;
 
 namespace ch05_01
 {
-	//delegate void DocumentProcess(Document doc);
-	//--->Action<Document>;
+	delegate bool Check(Document doc);
 }

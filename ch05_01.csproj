@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Check.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="DocumentProcess.cs" />
     <Compile Include="DocumentProcesses.cs" />

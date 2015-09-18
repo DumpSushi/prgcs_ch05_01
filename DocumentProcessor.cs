@@ -8,22 +8,38 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
-		private readonly List<DocumentProcess> processes =
-			new List<DocumentProcess>();
-
-		public List<DocumentProcess> Processes
+		class ActionCheckPair
 		{
-			get
-			{
-				return processes;
-			}
+			public Action<Document> Action { get; set; }
+			public Check QuickCheck { get; set; }
+		}
+		private readonly List<ActionCheckPair> processes =
+			new List<ActionCheckPair>();
+
+		public void AddProcess(Action<Document> action)
+		{
+			AddProcess(action, null);
+		}
+
+		public void AddProcess(Action<Document> action, Check quickCheck)
+		{
+			processes.Add(
+				new ActionCheckPair { Action = action, QuickCheck = quickCheck });
 		}
 
 		public void Process(Document doc)
 		{
-			foreach (DocumentProcess process in Processes)
+			foreach (ActionCheckPair process in processes)
 			{
-				process(doc);
+				if (process.QuickCheck != null && !process.QuickCheck(doc))
+				{
+					Console.WriteLine("処理は成功しないでしょう。");
+					return;
+				}
+			}
+			foreach (ActionCheckPair process in processes)
+			{
+				process.Action(doc);
 			}
 		}
 	}

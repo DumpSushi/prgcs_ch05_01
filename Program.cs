@@ -37,15 +37,15 @@ namespace ch05_01
 		static DocumentProcessor Configure()
 		{
 			DocumentProcessor rc = new DocumentProcessor();
-			rc.Processes.Add(DocumentProcesses.TranslateIntoFrench);
-			rc.Processes.Add(DocumentProcesses.Spellcheck);
-			rc.Processes.Add(DocumentProcesses.Repaginate);
+			rc.AddProcess(DocumentProcesses.TranslateIntoFrench);
+			rc.AddProcess(DocumentProcesses.Spellcheck);
+			rc.AddProcess(DocumentProcesses.Repaginate);
 
 			TrademarkFilter trademarkFilter = new TrademarkFilter();
 			trademarkFilter.Trademarks.Add("O'Reilly");
 			trademarkFilter.Trademarks.Add("millennium");
 
-			rc.Processes.Add(trademarkFilter.HighlightTradeMarks);
+			rc.AddProcess(trademarkFilter.HighlightTradeMarks);
 
 			return rc;
 		}

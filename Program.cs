@@ -37,7 +37,11 @@ namespace ch05_01
 		static DocumentProcessor Configure()
 		{
 			DocumentProcessor rc = new DocumentProcessor();
-			rc.AddProcess(DocumentProcesses.TranslateIntoFrench);
+			rc.AddProcess(DocumentProcesses.TranslateIntoFrench,
+				delegate(Document doc)
+				{
+					return !doc.Text.Contains("?");
+				});
 			rc.AddProcess(DocumentProcesses.Spellcheck);
 			rc.AddProcess(DocumentProcesses.Repaginate);
 

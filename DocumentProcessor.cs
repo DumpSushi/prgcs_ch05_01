@@ -11,7 +11,7 @@ namespace ch05_01
 		class ActionCheckPair
 		{
 			public Action<Document> Action { get; set; }
-			public Check QuickCheck { get; set; }
+			public Predicate<Document> QuickCheck { get; set; }
 		}
 		private readonly List<ActionCheckPair> processes =
 			new List<ActionCheckPair>();
@@ -21,7 +21,7 @@ namespace ch05_01
 			AddProcess(action, null);
 		}
 
-		public void AddProcess(Action<Document> action, Check quickCheck)
+		public void AddProcess(Action<Document> action, Predicate<Document> quickCheck)
 		{
 			processes.Add(
 				new ActionCheckPair { Action = action, QuickCheck = quickCheck });

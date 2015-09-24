@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ch05_01
 {
-	delegate bool Check(Document doc);
+	//delegate bool Check(Document doc);
 }

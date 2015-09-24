@@ -25,6 +25,8 @@ namespace ch05_01
 
 			DocumentProcessor processor = Configure();
 
+			processor.LogTextProvider = (doc => "ログ用の何らかの文書。。。");
+
 			Console.WriteLine("文書1を処理しています。");
 			processor.Process(doc1);
 			Console.WriteLine();

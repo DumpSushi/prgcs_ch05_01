@@ -8,6 +8,12 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
+		public LogTextProvider LogTextProvider
+		{
+			get;
+			set;
+		}
+
 		class ActionCheckPair
 		{
 			public Action<Document> Action { get; set; }
@@ -34,12 +40,20 @@ namespace ch05_01
 				if (process.QuickCheck != null && !process.QuickCheck(doc))
 				{
 					Console.WriteLine("処理は成功しないでしょう。");
+					if (LogTextProvider != null)
+					{
+						Console.WriteLine(LogTextProvider(doc));
+					}
 					return;
 				}
 			}
 			foreach (ActionCheckPair process in processes)
 			{
 				process.Action(doc);
+				if (LogTextProvider != null)
+				{
+					Console.WriteLine(LogTextProvider(doc));
+				}
 			}
 		}
 	}

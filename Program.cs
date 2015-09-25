@@ -22,16 +22,35 @@ namespace ch05_01
 				DocumentDate = new DateTime(2001, 01, 01),
 				Text = "This is the new millennium, I promise you."
 			};
+			Document doc3 = new Document
+			{
+				Author = "Matthew Adams",
+				DocumentDate = new DateTime(2002, 01, 01),
+				Text = "Another year, another document."
+			};
 
+			string documentBeingProcessed = "（文書未設定）";
 			DocumentProcessor processor = Configure();
 
-			processor.LogTextProvider = (doc => "ログ用の何らかの文書。。。");
+			int processCount = 0;
+			processor.LogTextProvider = (doc =>
+				{
+					processCount += 1;
+					return documentBeingProcessed;
+				});
 
-			Console.WriteLine("文書1を処理しています。");
+			documentBeingProcessed = "（文書1）";
 			processor.Process(doc1);
 			Console.WriteLine();
-			Console.WriteLine("文書2を処理しています。");
+			documentBeingProcessed = "（文書2）";
 			processor.Process(doc2);
+			Console.WriteLine();
+			documentBeingProcessed = "（文書3）";
+			processor.Process(doc3);
+
+			Console.WriteLine();
+			Console.WriteLine(processCount + "個の処理を実行しました。");
+
 
 			Console.ReadKey();
 		}

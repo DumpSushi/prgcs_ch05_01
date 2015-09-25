@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ch05_01
 {
-	delegate string LogTextProvider(Document doc);
+	//delegate string LogTextProvider(Document doc);
 }

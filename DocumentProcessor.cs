@@ -8,11 +8,18 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
+		public Func<Document, string> LogTextProvider
+		{
+			get;
+			set;
+		}
+		/*
 		public LogTextProvider LogTextProvider
 		{
 			get;
 			set;
 		}
+		 */
 
 		class ActionCheckPair
 		{

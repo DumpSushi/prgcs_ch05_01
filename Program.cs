@@ -32,6 +32,11 @@ namespace ch05_01
 			string documentBeingProcessed = "（文書未設定）";
 			DocumentProcessor processor = Configure();
 
+			ProductionDeptTool1 tool1 = new ProductionDeptTool1();
+			tool1.Subscribe(processor);
+			ProductionDeptTool2 tool2 = new ProductionDeptTool2();
+			tool2.Subscribe(processor);
+
 			int processCount = 0;
 			processor.LogTextProvider = (doc =>
 				{

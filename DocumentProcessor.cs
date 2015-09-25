@@ -8,18 +8,14 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
+		public event EventHandler Processing;
+		public event EventHandler Processed;
+
 		public Func<Document, string> LogTextProvider
 		{
 			get;
 			set;
 		}
-		/*
-		public LogTextProvider LogTextProvider
-		{
-			get;
-			set;
-		}
-		 */
 
 		class ActionCheckPair
 		{
@@ -42,6 +38,8 @@ namespace ch05_01
 
 		public void Process(Document doc)
 		{
+			OnProcessing(EventArgs.Empty);
+
 			foreach (ActionCheckPair process in processes)
 			{
 				if (process.QuickCheck != null && !process.QuickCheck(doc))
@@ -51,6 +49,7 @@ namespace ch05_01
 					{
 						Console.WriteLine(LogTextProvider(doc));
 					}
+					OnProcessed(EventArgs.Empty);
 					return;
 				}
 			}
@@ -61,6 +60,23 @@ namespace ch05_01
 				{
 					Console.WriteLine(LogTextProvider(doc));
 				}
+			}
+			OnProcessed(EventArgs.Empty);
+		}
+
+		private void OnProcessing(EventArgs e)
+		{
+			if (Processing != null)
+			{
+				Processing(this, e);
+			}
+		}
+
+		private void OnProcessed(EventArgs e)
+		{
+			if (Processed != null)
+			{
+				Processed(this, e);
 			}
 		}
 	}

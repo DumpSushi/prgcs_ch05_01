@@ -8,7 +8,7 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
-		public event EventHandler<ProcessEventArgs> Processing;
+		public event EventHandler<ProcessCancelEventArgs> Processing;
 		public event EventHandler<ProcessEventArgs> Processed;
 
 		public Func<Document, string> LogTextProvider
@@ -39,7 +39,17 @@ namespace ch05_01
 		public void Process(Document doc)
 		{
 			ProcessEventArgs e = new ProcessEventArgs(doc);
-			OnProcessing(e);
+			ProcessCancelEventArgs ce = new ProcessCancelEventArgs(doc);
+			OnProcessing(ce);
+			if (ce.Cancel)
+			{
+				Console.WriteLine("処理はキャンセルされました。");
+				if (LogTextProvider != null)
+				{
+					Console.WriteLine(LogTextProvider(doc));
+				}
+				return;
+			}
 
 			foreach (ActionCheckPair process in processes)
 			{
@@ -65,7 +75,7 @@ namespace ch05_01
 			OnProcessed(e);
 		}
 
-		private void OnProcessing(ProcessEventArgs e)
+		private void OnProcessing(ProcessCancelEventArgs e)
 		{
 			if (Processing != null)
 			{

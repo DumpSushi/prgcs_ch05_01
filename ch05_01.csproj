@@ -44,6 +44,7 @@
     <Compile Include="Document.cs" />
     <Compile Include="DocumentProcesses.cs" />
     <Compile Include="DocumentProcessor.cs" />
+    <Compile Include="ProcessCancelEventArgs.cs" />
     <Compile Include="ProcessEventArgs.cs" />
     <Compile Include="ProcessEventHandler.cs" />
     <Compile Include="ProductionDeptTools.cs" />

@@ -20,9 +20,9 @@ namespace ch05_01
 			processor.Processed -= processor_Processed;
 		}
 
-		private void processor_Processing(object sender, EventArgs e)
+		private void processor_Processing(object sender, ProcessCancelEventArgs e)
 		{
-			Console.WriteLine("ツール1が処理の開始を確認しました。");
+			Console.WriteLine("ツール1が処理の開始を確認しました。処理を続行します。");
 		}
 
 		void processor_Processed(object sender, EventArgs e)
@@ -37,7 +37,17 @@ namespace ch05_01
 		{
 			processor.Processing +=
 				(sender, e) =>
-					Console.WriteLine("ツール2が処理の開始を確認しました。");
+				{
+					if (e.Document.Text.Contains("document"))
+					{
+						Console.WriteLine("ツール2が処理の開始を確認しました。処理をキャンセルします。");
+						e.Cancel = true;
+					}
+					else
+					{
+						Console.WriteLine("ツール2が処理の開始を確認しました。処理を続行します。");
+					}
+				};
 			processor.Processed +=
 				(sender, e) =>
 					Console.WriteLine("ツール2が処理の終了を確認しました。");

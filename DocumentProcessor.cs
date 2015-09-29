@@ -8,8 +8,93 @@ namespace ch05_01
 {
 	class DocumentProcessor
 	{
-		public event EventHandler<ProcessCancelEventArgs> Processing;
-		public event EventHandler<ProcessEventArgs> Processed;
+		private Dictionary<string, Delegate> events;
+
+		public event EventHandler<ProcessCancelEventArgs> Processing
+		{
+			add
+			{
+				Delegate theDelegate =
+					EnsureEvent("Processing");
+				events["Processing"] =
+					((EventHandler<ProcessCancelEventArgs>)
+						theDelegate) + value;
+			}
+			remove
+			{
+				Delegate theDelegate =
+					EnsureEvent("Processing");
+				events["Processing"] =
+					((EventHandler<ProcessCancelEventArgs>)
+						theDelegate) - value;
+			}
+		}
+
+		public event EventHandler<ProcessEventArgs> Processed
+		{
+			add
+			{
+				Delegate theDelegate =
+					EnsureEvent("Processed");
+				events["Processed"] =
+					((EventHandler<ProcessEventArgs>)
+						theDelegate) + value;
+			}
+			remove
+			{
+				Delegate theDelegate =
+					EnsureEvent("Processed");
+				events["Processed"] =
+					((EventHandler<ProcessEventArgs>)
+						theDelegate) - value;
+			}
+		}
+
+		private Delegate EnsureEvent(string eventName)
+		{
+			if (events == null)
+			{
+				events = new Dictionary<string,Delegate>();
+			}
+
+			Delegate theDelegate = null;
+			if (!events.TryGetValue(eventName, out theDelegate))
+			{
+				events.Add(eventName, null);
+			}
+
+			return theDelegate;
+		}
+
+		private void OnProcessing(ProcessCancelEventArgs e)
+		{
+			Delegate eh = null;
+			if(events != null &&
+				events.TryGetValue("Processing", out eh))
+			{
+				EventHandler<ProcessCancelEventArgs> pceh =
+					eh as EventHandler<ProcessCancelEventArgs>;
+				if (pceh != null)
+				{
+					pceh(this, e);
+				}
+			}
+		}
+
+		private void OnProcessed(ProcessEventArgs e)
+		{
+			Delegate eh = null;
+			if (events != null &&
+				events.TryGetValue("Processed", out eh))
+			{
+				EventHandler<ProcessEventArgs> pceh =
+					eh as EventHandler<ProcessEventArgs>;
+				if (pceh != null)
+				{
+					pceh(this, e);
+				}
+			}
+		}
 
 		public Func<Document, string> LogTextProvider
 		{
@@ -73,22 +158,6 @@ namespace ch05_01
 				}
 			}
 			OnProcessed(e);
-		}
-
-		private void OnProcessing(ProcessCancelEventArgs e)
-		{
-			if (Processing != null)
-			{
-				Processing(this, e);
-			}
-		}
-
-		private void OnProcessed(ProcessEventArgs e)
-		{
-			if (Processed != null)
-			{
-				Processed(this, e);
-			}
 		}
 	}
 }
